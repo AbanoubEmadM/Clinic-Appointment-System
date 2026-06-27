@@ -27,7 +27,7 @@ class UserFactory extends Factory
         return [
             'first_name' => fake()->name(),
             'last_name' => fake()->name(),
-            'role' => fake()->randomElement(['admin', 'receptionist', 'doctor']),
+            'role' => fake()->randomElement(['admin', 'receptionist', 'doctor', 'patient']),
             'phone_number' => fake()->phoneNumber(),
             'is_active' => fake()->boolean(),
             'email' => fake()->unique()->safeEmail(),
