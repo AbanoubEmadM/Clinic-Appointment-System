@@ -4,11 +4,10 @@ namespace App\Http\Controllers\Api\V1\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
-use App\Models\Appointment;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
+use App\Http\Requests\AdminUserRequest;
 use Illuminate\Support\Facades\DB;
 
 class AdminUserController extends Controller
@@ -41,49 +40,17 @@ class AdminUserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User $user): JsonResponse
+    public function update(AdminUserRequest $request, User $user): JsonResponse
     {
-        $validated = $request->validate([
-            'first_name' => 'sometimes|string|max:255',
-            'last_name' => 'sometimes|string|max:255',
-            'email' => 'sometimes|string|email|max:255',
-            'phone_number' => 'sometimes|string|max:255',
-            'role' => 'sometimes|string|max:255',
-            'specialty' => 'sometimes|string|max:255',
-            'license_number' => 'sometimes|string|max:255',
-            'consultation_fee' => 'sometimes|string|max:255',
-            'bio' => 'sometimes|string|max:255',
-        ]);
-
-        DB::transaction(function () use ($user, $validated) {
-            $user->update([
-                ...Arr::only($validated, [
-                    'first_name',
-                    'last_name',
-                    'email',
-                    'phone_number',
-                    'role',
-                ]),
-            ]);
-
+        DB::transaction(function() use ($request, $user) {
+            $user->update($request->validated());
             if ($user->role === 'doctor') {
-                $user->doctor->update([
-                    ...Arr::only($validated, [
-                        'specialty',
-                        'license_number',
-                        'consultation_fee',
-                        'bio',
-                    ]),
-                    'yoe' => $validated['yoe'] ?? $user->doctor->yoe,
-                ]);
+                $user->doctor()->update($request->validated());
             }
         });
-
-        $user->refresh();
-
         return response()->json([
             'message' => 'User updated successfully',
-            'data' => new UserResource($user),
+            'data' => $user
         ]);
     }
 
