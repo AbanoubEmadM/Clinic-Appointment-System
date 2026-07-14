@@ -21,7 +21,6 @@ class VisitFactory extends Factory
     {
         return [
             'appointment_id' => Appointment::factory(),
-            'prescription_id' => Prescription::factory(),
             'examination_notes' => fake()->text(),
             'diagnosis' => fake()->text(),
             'treatment_plan' => fake()->text(),

@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Prescription;
+use App\Models\Visit;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -18,6 +19,7 @@ class PrescriptionFactory extends Factory
     public function definition(): array
     {
         return [
+            'visit_id' => Visit::factory(),
             'medication_name' => fake()->word(),
             'dosage' => fake()->word(),
             'frequency' => fake()->word(),

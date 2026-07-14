@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('visits', function (Blueprint $table) {
             $table->id();
             $table->foreignId('appointment_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('prescription_id')->constrained()->cascadeOnDelete();
             $table->text('examination_notes')->nullable();
             $table->text('diagnosis')->nullable();
             $table->text('treatment_plan')->nullable();
