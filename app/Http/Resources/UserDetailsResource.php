@@ -21,7 +21,6 @@ class UserDetailsResource extends JsonResource
             'phone_number' => $this->phone_number,
             'email' => $this->email,
             'is_active' => $this->is_active,
-            'role' => $this->role,
         ];
     }
 }

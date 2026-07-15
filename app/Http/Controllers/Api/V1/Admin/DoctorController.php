@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Api\V1\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\DoctorRequest;
 use App\Http\Resources\DoctorDetailsResource;
 use App\Models\Doctor;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 
 class DoctorController extends Controller
 {
@@ -19,8 +22,9 @@ class DoctorController extends Controller
         $doctor = Doctor::with(['user', 'appointments.visit'])->findOrFail($doctor->id);
         return response()->json(['doctor' => new DoctorDetailsResource($doctor)]);
     }
-    public function update(Request $request, Doctor $doctor)
+    public function update(DoctorRequest $request, Doctor $doctor)
     {
+        DB::beginTransaction();
 
     }
 }
