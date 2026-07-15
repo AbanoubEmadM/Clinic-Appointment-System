@@ -16,13 +16,14 @@ class DoctorDetailsResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'speciality' => $this->speciality,
-            'licence_number' => $this->licence_number,
-            'yoe' => $this->yoe,
+            'specialty' => $this->specialty,
+            'license_number' => $this->license_number,
+            'years_of_exp' => $this->yoe,
             'consultation_fee' => $this->consultation_fee,
             'bio' => $this->bio,
             'user' => new UserDetailsResource($this->user),
-            'appointments' => AppointmentDetailsResource::collection($this->whenLoaded('appointments'))
+            'appointments' => AppointmentDetailsResource::collection($this->appointments),
+            'visit' => new VisitDetailsResource($this->visit)
         ];
     }
 }

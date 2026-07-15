@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('first_name');
             $table->string('last_name');
-            $table->string('phone_number');
+            $table->string('phone_number')->unique();
             $table->boolean('is_active')->default(false);
             $table->enum('role', ['admin', 'receptionist', 'doctor','patient'])->default('patient');
             $table->string('email')->unique();

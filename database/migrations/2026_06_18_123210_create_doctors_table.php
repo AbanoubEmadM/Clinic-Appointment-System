@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('doctors', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete()->onDelete('cascade');
-            $table->enum('speciality', [
+            $table->enum('specialty', [
                 'general_practice',
                 'internal_medicine',
                 'pediatrics',
@@ -25,7 +25,7 @@ return new class extends Migration
                 'ent',
                 'dentistry',
             ]);
-            $table->string('licence_number', 50)->unique();
+            $table->string('license_number', 50)->unique();
             $table->integer('yoe');
             $table->decimal('consultation_fee', 10, 2);
             $table->text('bio')->nullable();

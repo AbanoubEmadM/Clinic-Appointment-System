@@ -38,7 +38,7 @@ class DoctorPolicy
     public function update(User $user, Doctor $doctor): bool
     {
         // Doctor can update his own info and admin also can edit doctors data
-        return $user->role === 'admin' ||$doctor->user_id === $user->id;
+        return $user->role === 'admin' || $doctor->user_id === $user->id;
     }
 
     /**

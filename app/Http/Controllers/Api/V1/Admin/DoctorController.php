@@ -6,12 +6,16 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\DoctorRequest;
 use App\Http\Resources\DoctorDetailsResource;
 use App\Models\Doctor;
+use App\Services\DoctorService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 
 class DoctorController extends Controller
 {
+    public function __construct(
+        private DoctorService $doctorService
+) {}
     public function index()
     {
         $doctors = Doctor::with(['user:first_name,last_name,email,is_active'])->paginate(15);
@@ -24,7 +28,7 @@ class DoctorController extends Controller
     }
     public function update(DoctorRequest $request, Doctor $doctor)
     {
-        DB::beginTransaction();
-
+        $doctor = $this->doctorService->update($request->validated(), $doctor);
+        return $doctor;
     }
 }

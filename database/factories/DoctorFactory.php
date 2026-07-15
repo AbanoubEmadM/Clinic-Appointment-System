@@ -20,7 +20,7 @@ class DoctorFactory extends Factory
     {
         return [
             'user_id' => User::factory(),
-            'speciality' => fake()->randomElement([
+            'specialty' => fake()->randomElement([
                 'general_practice',
                 'internal_medicine',
                 'pediatrics',
@@ -32,7 +32,7 @@ class DoctorFactory extends Factory
                 'dentistry',
 
             ]),
-            'licence_number' => fake()->unique()->randomNumber(),
+            'license_number' => fake()->unique()->uuid(),
             'yoe' => fake()->numberBetween(1, 20),
             'consultation_fee' => fake()->randomFloat(2, 10, 100),
             'bio' => fake()->text(),

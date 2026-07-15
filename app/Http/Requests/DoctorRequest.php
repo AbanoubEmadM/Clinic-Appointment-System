@@ -2,7 +2,11 @@
 
 namespace App\Http\Requests;
 
+use App\Http\Resources\AppointmentDetailsResource;
+use App\Http\Resources\UserDetailsResource;
+use App\Http\Resources\VisitDetailsResource;
 use App\Models\Doctor;
+use App\Models\User;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
@@ -15,7 +19,7 @@ class DoctorRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return Auth::user()->can('update', Doctor::class);
+        return true;
     }
 
     /**
@@ -25,34 +29,28 @@ class DoctorRequest extends FormRequest
      */
     public function rules(): array
     {
-        // Fetches user ID from route parameter /users/{user}
-        $userID = $this->route('user')?->id;
+        // Fetches user ID from route parameter /admin/doctors/{doctor}
+        $doctorID = $this->route('doctor')?->id;
         return [
-            'first_name' => ['required', 'string', 'max:255'],
-            'last_name' => ['required', 'string', 'max:255'],
+            // User
+            'first_name' => ['required', 'string'],
+            'last_name' => ['required', 'string'],
             'email' => [
                 'required',
-                'string',
                 'email',
-                'max:255',
-                Rule::unique('doctors', 'email')->ignore($userID)
+                Rule::unique('users')->ignore($this->route('doctor')->user_id),
             ],
-            'phone_number' => ['required', 'string', 'max:255'],
+            'phone_number' => [
+                'required',
+                Rule::unique('users')->ignore($this->route('doctor')->user_id),
+            ],
             'is_active' => ['required', 'boolean'],
 
-            'appointments.*.status' => ['required', 'string', 'max:20'],
-            'appointments.*.duration_time' => ['required', 'integer'],
-            'appointments.*.chief_complaint' => ['required', 'string', 'max:255'],
-            'appointments.*.cancellation_reason' => ['required', 'string', 'max:255'],
-            'appointments.*.checked_in_at' => ['required', 'date', 'date_format:Y-m-d'],
-
-            'visit.examination_notes' => ['required', 'string', 'max:255'],
-            'visit.diagnosis' => ['required', 'string', 'max:255'],
-            'visit.treatment_plan' => ['required', 'string', 'max:255'],
-            'visit.follow_up_days' => ['required', 'integer'],
-            'visit.attachment_url' => ['required', 'url', 'max:255'],
-            'visit.finalized_at' => ['required', 'date', 'date_format:Y-m-d'],
-
+            // Doctor
+            'specialty' => ['required', 'string', 'max:255'],
+            'license_number' => ['required', 'string', 'max:255', Rule::unique('doctors', 'license_number')->ignore($doctorID)],
+            'consultation_fee' => ['required', 'numeric', 'min:0'],
+            'bio' => ['required', 'string', 'max:255'],
         ];
     }
 }
