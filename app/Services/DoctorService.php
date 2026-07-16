@@ -2,9 +2,11 @@
 
 namespace App\Services;
 
-use App\Http\Requests\DoctorRequest;
+use App\Http\Requests\UpdateDoctorRequest;
 use App\Models\Doctor;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class DoctorService
 {
@@ -15,8 +17,29 @@ class DoctorService
     {
         //
     }
-    // DB Transaction must be used here as we will update many tables concurrently so if one process failed we must rollback everything
-
+    public function store(array $data): Doctor
+    {
+        return DB::transaction(function () use ($data) {
+            $user = User::create([
+                'first_name' => $data['first_name'],
+                'last_name' => $data['last_name'],
+                'email' => $data['email'],
+                'password' => Hash::make($data['password']),
+                'role' => 'doctor',
+                'is_active' => false,
+                'phone_number' => $data['phone_number'],
+            ]);
+           $doctor = Doctor::create([
+               'user_id' => $user->id,
+              'specialty' => $data['specialty'],
+               'yoe' => $data['yoe'],
+               'license_number' => $data['license_number'],
+               'consultation_fee' => $data['consultation_fee'],
+               'bio' => $data['bio'],
+           ]);
+           return $doctor->load(['user']);
+        });
+    }
     public function update(array $data, Doctor $doctor)
     {
         DB::transaction(function () use ($data, $doctor) {

@@ -21,7 +21,7 @@ class DoctorDetailsResource extends JsonResource
             'years_of_exp' => $this->yoe,
             'consultation_fee' => $this->consultation_fee,
             'bio' => $this->bio,
-            'user' => new UserDetailsResource($this->user),
+            'user' => new UserResource($this->user),
             'appointments' => AppointmentDetailsResource::collection($this->appointments),
             'visit' => new VisitDetailsResource($this->visit)
         ];

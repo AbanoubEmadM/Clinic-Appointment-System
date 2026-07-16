@@ -3,7 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Http\Resources\AppointmentDetailsResource;
-use App\Http\Resources\UserDetailsResource;
+use App\Http\Resources\UserResource;
 use App\Http\Resources\VisitDetailsResource;
 use App\Models\Doctor;
 use App\Models\User;
@@ -12,7 +12,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
-class DoctorRequest extends FormRequest
+class UpdateDoctorRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -47,6 +47,7 @@ class DoctorRequest extends FormRequest
             'is_active' => ['required', 'boolean'],
 
             // Doctor
+            'user_id' => ['required', 'integer', 'exists:users,id'],
             'specialty' => ['required', 'string', 'max:255'],
             'license_number' => ['required', 'string', 'max:255', Rule::unique('doctors', 'license_number')->ignore($doctorID)],
             'consultation_fee' => ['required', 'numeric', 'min:0'],
