@@ -42,7 +42,7 @@ class DoctorService
     }
     public function update(array $data, Doctor $doctor)
     {
-        DB::transaction(function () use ($data, $doctor) {
+        return DB::transaction(function () use ($data, $doctor) {
             $doctor->user->update([
                 'first_name' => $data['first_name'],
                 'last_name' => $data['last_name'],
@@ -57,7 +57,6 @@ class DoctorService
                 'bio' => $data['bio'],
             ]);
         });
-        return response()->json(['doctor' => $doctor]);
     }
 
 }

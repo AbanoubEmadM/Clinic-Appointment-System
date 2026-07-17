@@ -33,8 +33,8 @@ class UpdateDoctorRequest extends FormRequest
         $doctorID = $this->route('doctor')?->id;
         return [
             // User
-            'first_name' => ['required', 'string'],
-            'last_name' => ['required', 'string'],
+            'first_name' => ['required', 'string', 'max:255'],
+            'last_name' => ['required', 'string', 'max:255'],
             'email' => [
                 'required',
                 'email',

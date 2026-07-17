@@ -19,7 +19,13 @@ Route::prefix('v1')->group(function () {
     });
     Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
         Route::apiResource('/admin/patients', \App\Http\Controllers\Api\V1\Admin\PatientController::class);
+        Route::patch('/admin/patients/{patient}/activate', [\App\Http\Controllers\Api\V1\Admin\PatientController::class, 'activate']);
+        Route::patch('/admin/patients/{patient}/deactivate', [\App\Http\Controllers\Api\V1\Admin\PatientController::class, 'deactivate']);
+
         Route::apiResource('/admin/doctors', \App\Http\Controllers\Api\V1\Admin\DoctorController::class);
+        Route::patch('/admin/doctors/{doctor}/activate', [\App\Http\Controllers\Api\V1\Admin\DoctorController::class, 'activate']);
+        Route::patch('/admin/doctors/{doctor}/deactivate', [\App\Http\Controllers\Api\V1\Admin\DoctorController::class, 'deactivate']);
+
         Route::apiResource('/admin/receptionists', \App\Http\Controllers\Api\V1\Admin\ReceptionistController::class);
         Route::apiResource('/admin/appointments', \App\Http\Controllers\Api\V1\Admin\AppointmentController::class)
         ->only(['index', 'show']);

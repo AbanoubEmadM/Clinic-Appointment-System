@@ -22,7 +22,7 @@ class DoctorDetailsResource extends JsonResource
             'consultation_fee' => $this->consultation_fee,
             'bio' => $this->bio,
             'user' => new UserResource($this->user),
-            'appointments' => AppointmentDetailsResource::collection($this->appointments),
+            'appointments' => AppointmentDetailsResource::collection($this->whenLoaded('appointments')),
             'visit' => new VisitDetailsResource($this->visit)
         ];
     }

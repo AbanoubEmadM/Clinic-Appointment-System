@@ -21,30 +21,41 @@ class DoctorController extends Controller
 ) {}
     public function index()
     {
-        $doctors = Doctor::with(['user:first_name,last_name,email,is_active'])->paginate(15);
-        return response()->json(['doctors' => new DoctorDetailsResource($doctors)]);
+        $doctors = Doctor::with(['user:first_name,last_name,email'])->paginate(15);
+        return response()->json(['data' => DoctorDetailsResource::collection($doctors)]);
     }
     public function show(Doctor $doctor)
     {
         $doctor = Doctor::with(['user', 'appointments.visit'])->findOrFail($doctor->id);
-        return response()->json(['doctor' => new DoctorDetailsResource($doctor)]);
+        return response()->json(['data' => new DoctorDetailsResource($doctor)]);
     }
     public function store(StoreDoctorRequest $request)
     {
         $doctor = $this->doctorService->store($request->validated());
         return response()->json([
             'message' => 'Doctor created successfully',
-            'doctor' => new DoctorResource($doctor)
+            'data' => new DoctorResource($doctor)
         ], 201);
     }
     public function update(UpdateDoctorRequest $request, Doctor $doctor)
     {
         $doctor = $this->doctorService->update($request->validated(), $doctor);
-        return $doctor;
+        return response()->json(['data' => $doctor]);
+
     }
     public function destroy(Doctor $doctor)
     {
         $doctor->delete();
         return response()->json(['message' => 'Doctor deleted successfully']);
+    }
+    public function activate(Doctor $doctor)
+    {
+        $doctor->user->update(['is_active' => true]);
+        return response()->json(['message' => 'Doctor activated successfully']);
+    }
+    public function deactivate(Doctor $doctor)
+    {
+        $doctor->user->update(['is_active' => false]);
+        return response()->json(['message' => 'Doctor deactivated successfully']);
     }
 }
