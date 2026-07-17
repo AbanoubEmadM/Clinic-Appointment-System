@@ -15,7 +15,17 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-         User::factory(10)->create();
+        User::factory()->create([
+            'first_name' => 'Admin',
+             'last_name' => 'Admin',
+             'password' => \Hash::make('password'),
+             'role' => 'admin',
+             'is_active' => true,
+             'phone_number' => '01274526679',
+             'email' => 'admin@admin.com',
+         ]);
+        User::factory(10)->create();
+
          $this->call([
              DoctorSeeder::class,
              PatientSeeder::class,
@@ -25,6 +35,7 @@ class DatabaseSeeder extends Seeder
              PaymentSeeder::class,
              PrescriptionSeeder::class,
              VisitSeeder::class,
+             ReceptionistSeeder::class,
          ]);
     }
 }
