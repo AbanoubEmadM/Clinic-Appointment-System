@@ -63,15 +63,9 @@ class PatientController extends Controller
         $patient->delete();
         return response()->json(['message' => 'Patient deleted successfully']);
     }
-    public function activate(Patient $patient)
+    public function updateStatus(Patient $patient)
     {
-        $patient->user->update(['is_active' => true]);
-        return response()->json(['message' => 'Patient activated successfully']);
+        $patient->user->update(['is_active' => !$patient->user->is_active]);
+        return response()->json(['message' => 'Patient Status Changed successfully']);
     }
-    public function deactivate(Patient $patient)
-    {
-        $patient->user->update(['is_active' => false]);
-        return response()->json(['message' => 'Patient deactivated successfully']);
-    }
-
 }

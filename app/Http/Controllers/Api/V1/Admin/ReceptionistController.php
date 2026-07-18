@@ -40,15 +40,10 @@ class ReceptionistController extends Controller
         $receptionist->delete();
         return response()->json(['message' => 'Successfully deleted receptionist']);
     }
-    public function activate(Receptionist $receptionist)
+    public function updateStatus(Receptionist $receptionist)
     {
-        $receptionist->user->update(['is_active' => true]);
-        return response()->json(['message' => 'Receptionist activated successfully']);
-    }
-    public function deactivate(Receptionist $receptionist)
-    {
-        $receptionist->user->update(['is_active' => false]);
-        return response()->json(['message' => 'Receptionist deactivated successfully']);
+        $receptionist->user->update(['is_active' => !$receptionist->user->is_active]);
+        return response()->json(['message' => 'Receptionist Status Changed successfully']);
     }
 
 }

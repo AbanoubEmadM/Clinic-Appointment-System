@@ -16,10 +16,15 @@ class InvoiceController extends Controller
     }
     public function show(Invoice $invoice)
     {
-        $invoice = Invoice::with([
-            'appointment.patient.user',
-            'appointment.doctor',
-        ])->findOrFail($invoice->id);
-        return response()->json(['data' => new InvoiceDetailsResource($invoice)]);
+        $invoice->load([
+            'appointment:id,patient_id,doctor_id',
+            'appointment.patient:id,user_id',
+            'appointment.patient.user:id,first_name,last_name',
+            'appointment.doctor:id,user_id,specialty',
+            'appointment.doctor.user:id,first_name,last_name',
+            'appointment.visit:id,appointment_id',
+            'appointment.visit.prescriptions:id,visit_id,medication_name,dosage',
+            ]);
+        return response()->json(['data' => $invoice]);
     }
 }

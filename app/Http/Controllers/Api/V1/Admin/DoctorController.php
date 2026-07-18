@@ -48,14 +48,9 @@ class DoctorController extends Controller
         $doctor->delete();
         return response()->json(['message' => 'Doctor deleted successfully']);
     }
-    public function activate(Doctor $doctor)
+    public function updateStatus(Doctor $doctor)
     {
-        $doctor->user->update(['is_active' => true]);
-        return response()->json(['message' => 'Doctor activated successfully']);
-    }
-    public function deactivate(Doctor $doctor)
-    {
-        $doctor->user->update(['is_active' => false]);
-        return response()->json(['message' => 'Doctor deactivated successfully']);
+        $doctor->user->update(['is_active' => !$doctor->user->is_active]);
+        return response()->json(['message' => 'Doctor Status Changed successfully']);
     }
 }
