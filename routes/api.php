@@ -27,12 +27,18 @@ Route::prefix('v1')->group(function () {
         Route::patch('/admin/doctors/{doctor}/deactivate', [\App\Http\Controllers\Api\V1\Admin\DoctorController::class, 'deactivate']);
 
         Route::apiResource('/admin/receptionists', \App\Http\Controllers\Api\V1\Admin\ReceptionistController::class);
+        Route::patch('/admin/receptionists/{receptionist}/activate', [\App\Http\Controllers\Api\V1\Admin\ReceptionistController::class, 'activate']);
+        Route::patch('/admin/receptionists/{receptionist}/deactivate', [\App\Http\Controllers\Api\V1\Admin\ReceptionistController::class, 'deactivate']);
+
         Route::apiResource('/admin/appointments', \App\Http\Controllers\Api\V1\Admin\AppointmentController::class)
         ->only(['index', 'show']);
+
         Route::apiResource('/admin/visits', \App\Http\Controllers\Api\V1\Admin\VisitController::class)
         ->only(['index', 'show']);
+
         Route::apiResource('/admin/invoices', \App\Http\Controllers\Api\V1\Admin\InvoiceController::class)
         ->only(['index', 'show']);
+
         Route::apiResource('/admin/payments', \App\Http\Controllers\Api\V1\Admin\PaymentController::class)
         ->only(['index', 'show']);
 //        Route::apiResource('/admin/patients', \App\Http\Controllers\Api\V1\Admin\DashboardController::class);

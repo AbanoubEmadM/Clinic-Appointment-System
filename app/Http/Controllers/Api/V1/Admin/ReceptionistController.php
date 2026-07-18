@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreReceptionistRequest;
 use App\Http\Requests\UpdateReceptionistRequest;
+use App\Models\Doctor;
 use App\Models\Receptionist;
 use App\Services\ReceptionistService;
 
@@ -38,6 +39,16 @@ class ReceptionistController extends Controller
     {
         $receptionist->delete();
         return response()->json(['message' => 'Successfully deleted receptionist']);
+    }
+    public function activate(Receptionist $receptionist)
+    {
+        $receptionist->user->update(['is_active' => true]);
+        return response()->json(['message' => 'Receptionist activated successfully']);
+    }
+    public function deactivate(Receptionist $receptionist)
+    {
+        $receptionist->user->update(['is_active' => false]);
+        return response()->json(['message' => 'Receptionist deactivated successfully']);
     }
 
 }
