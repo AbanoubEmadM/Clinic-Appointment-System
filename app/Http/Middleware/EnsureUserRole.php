@@ -20,7 +20,7 @@ class EnsureUserRole
                 'message' => 'Unauthenticated.',
             ], 401);
         }
-        if (!in_array($request->user()->role, ['admin', 'doctor'])) {
+        if (!in_array($request->user()->role, ['admin', 'doctor', 'patient', 'receptionist'])) {
             return response()->json([
                 'message' => 'Unauthorized. You do not have access to this resource.',
             ], 403);

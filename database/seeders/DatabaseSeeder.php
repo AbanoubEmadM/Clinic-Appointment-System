@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\DoctorSchdule;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -36,6 +37,8 @@ class DatabaseSeeder extends Seeder
              PrescriptionSeeder::class,
              VisitSeeder::class,
              ReceptionistSeeder::class,
+             DoctorScheduleSeeder::class,
+
          ]);
     }
 }
