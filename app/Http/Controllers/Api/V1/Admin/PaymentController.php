@@ -15,9 +15,9 @@ class PaymentController extends Controller
         return response()->json($payments);
     }
 
-    public function show(string $id)
+    public function show(Payment $payment): JsonResponse
     {
-        $payment = Payment::findOrFail($id);
+        $payment->get();
         return response()->json($payment);
     }
 }

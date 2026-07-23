@@ -22,7 +22,7 @@ class ReceptionistController extends Controller
     }
     public function show(Receptionist $receptionist)
     {
-        $receptionist = Receptionist::with(['user'])->findOrFail($receptionist->id);
+        $receptionist->load(['user']);
         return response()->json(['data' => $receptionist]);
     }
     public function store(StoreReceptionistRequest $request)

@@ -26,7 +26,7 @@ class DoctorController extends Controller
     }
     public function show(Doctor $doctor)
     {
-        $doctor = Doctor::with(['user', 'appointments.visit'])->findOrFail($doctor->id);
+        $doctor->load(['user', 'appointments.visit']);
         return response()->json(['data' => new DoctorDetailsResource($doctor)]);
     }
     public function store(StoreDoctorRequest $request)

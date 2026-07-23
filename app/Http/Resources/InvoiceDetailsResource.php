@@ -21,7 +21,7 @@ class InvoiceDetailsResource extends JsonResource
             'issued_at' => $this->issued_at,
             'due_date' => $this->due_date,
             'notes' => $this->notes,
-            'appointment' => new AppointmentDetailsResource($this->appointment),
+            'appointment' => new AppointmentResource($this->appointment),
             'patient' => new PatientResource($this->appointment->patient),
             'user' => new UserResource($this->appointment->patient->user),
             'doctor' => new DoctorResource($this->appointment->doctor),

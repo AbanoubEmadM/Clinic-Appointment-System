@@ -40,7 +40,7 @@ class PatientController extends Controller
      */
     public function show(Patient $patient)
     {
-        $patient = Patient::with(['user'])
+        $patient->load(['user'])
             ->findOrFail($patient->id);
         return response()->json(['data' => new PatientResource($patient)]);
 

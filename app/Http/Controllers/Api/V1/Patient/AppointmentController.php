@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1\Patient;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AppointmentRequest;
 use App\Http\Requests\StoreAppointmentRequest;
+use App\Http\Resources\AppointmentResource;
 use App\Models\Appointment;
 use App\Services\AppointmentService;
 use Illuminate\Http\Request;
@@ -26,7 +27,7 @@ class AppointmentController extends Controller
             ->with(['doctor.user'])
             ->latest()
             ->get();
-        return response()->json(['data' => $appointments], 200);
+        return response()->json(['data' => new AppointmentResource($appointments)], 200);
     }
 
     /**

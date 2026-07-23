@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\Http\Resources\AppointmentDetailsResource;
+use App\Http\Resources\AppointmentResource;
 use App\Http\Resources\UserResource;
 use App\Http\Resources\VisitDetailsResource;
 use App\Models\Doctor;

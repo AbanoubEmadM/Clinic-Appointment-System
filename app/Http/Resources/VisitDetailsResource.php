@@ -21,7 +21,9 @@ class VisitDetailsResource extends JsonResource
             'treatment_plan' => $this->treatment_plan,
             'follow_up_days' => $this->follow_up_days,
             'attachment_url' => $this->attachment_url,
-            'finalized_at' => $this->finalized_at
+            'finalized_at' => $this->finalized_at,
+            'prescriptions' => PrescriptionResource::collection($this->prescriptions),
+            'doctor' => new DoctorResource($this->doctor)
         ];
     }
 }

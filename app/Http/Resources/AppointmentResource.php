@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class AppointmentDetailsResource extends JsonResource
+class AppointmentResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -22,8 +22,7 @@ class AppointmentDetailsResource extends JsonResource
             'chief_complaint' => $this->chief_complaint,
             'cancellation_reason' => $this->cancellation_reason,
             'checked_in_at' => $this->checked_in_at,
-            'visit' => new VisitDetailsResource($this->visit),
-            'doctor' => new DoctorResource($this->doctor),
+            'doctor' => new DoctorResource($this->whenLoaded('doctor')),
         ];
     }
 }
